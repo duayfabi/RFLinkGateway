@@ -87,7 +87,7 @@ class MQTTClient(multiprocessing.Process):
 
         try:
             self.logger.debug('Sending:%s to %s' % (task, topic))
-            publish.single(topic, payload=task['payload'], hostname=self.host, auth=self.auth, port=self.port)
+            publish.single(topic, payload=task['payload'], qos=1, retain=True, hostname=self.host, auth=self.auth, port=self.port)
         except Exception as e:
             self.logger.error('Publish problem: %s' % (e))
             self.messageQ.put(task)
